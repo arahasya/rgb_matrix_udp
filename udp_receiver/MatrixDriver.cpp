@@ -338,16 +338,12 @@ void MatrixDriver::setPixel(unsigned x, unsigned y, uint8_t r, uint8_t g, uint8_
     // verify coordinate bounds
     if(x >= rasterWidth || y >= rasterHeight) return;
 
+    unsigned int mWidth = rasterWidth;
+    unsigned int mHeight = rasterHeight;
+    (*transformer)(x, y, mWidth, mHeight);
 
     // apply interleaving
     (*interleaver)(x, y);
-
-   unsigned int mWidth = matrixWidth;
-    unsigned int mHeight = matrixHeight;
-    (*transformer)(x, y, mWidth, mHeight);
-
-    // verify coordinate bounds
-    if(x >= matrixWidth || y >= matrixHeight) return;
 
     // compute pixel offset
     const auto yoff = y % scanRowCnt;
