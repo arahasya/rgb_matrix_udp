@@ -173,9 +173,10 @@ MatrixDriver * MatrixDriver::createInstance(unsigned pwmBits, const RowFormat ro
     // set scan row headers
     auto encoder = RowEncoding::encoder[rowFormat];
     unsigned pwFact = driver->getWidth() / mapPulseWidth[pwmRows-1];
-    auto header = driver->frameHeader + ROW_PADDING + HEADER_OFFSET;
+    auto header = driver->frameHeader + HEADER_OFFSET;
     unsigned srow = 0;
     setHeaderRowCode(header, srow++, pwmRows, encoder);
+    header += ROW_PADDING;
     for(unsigned r = 0; r < scanRowCnt; r++) {
         for (unsigned p = 0; p < pwmRows; p++) {
             setHeaderRowCode(header, srow++, pwmRows, encoder);
@@ -424,7 +425,7 @@ void* MatrixDriver::doRefresh(void *obj) {
         pthread_mutex_unlock(&ctx.mutexBuffer);
 
         // allow window for frame flip
-        usleep(1000);
+        usleep(10);
     }
 
     return nullptr;

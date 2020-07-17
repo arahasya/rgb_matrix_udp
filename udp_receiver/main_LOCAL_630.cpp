@@ -25,10 +25,6 @@
 #define FRAME_MASK (0x0fu)      // 16 frame circular buffer
 #define SUBFRAME_PIXELS (400)   // 400 pixels per sub-frame
 
-// do not sleep for more than 1 second
-// prevents hangs on NTP adjustments
-#define MAX_SLEEP (1000000l)
-
 bool isRunning = true;
 int socketUdp = -1;
 
@@ -113,13 +109,8 @@ int main(int argc, char **argv) {
 
     // configure rgb matrix panel driver
     MatrixDriver::initGpio(MatrixDriver::gpio_rpi3);
-<<<<<<< HEAD
     matrix = MatrixDriver::createInstance(PWM_BITS, MatrixDriver::HUB75ABC, MatrixDriver::Z48ABC, MatrixDriver::NO_TRANSFORMING);
     createPwmLutLinear(PWM_BITS, brightness, matrix->getPwmMapping());
-=======
-    matrix = MatrixDriver::createInstance(PWM_BITS, MatrixDriver::HUB75AB, MatrixDriver::Z08AB);
-    createPwmLutCie1931(PWM_BITS, brightness, matrix->getPwmMapping());
->>>>>>> 4488615ac9175e4921a449bc48bccd49168c2318
     log("instantiated matrix driver");
     log("matrix canvas is %d x %d", matrix->getWidth(), matrix->getHeight());
 
@@ -193,7 +184,6 @@ int main(int argc, char **argv) {
 
             // wait for scheduled frame boundary
             diff = frame->targetEpochUs - microtime();
-            if(diff > MAX_SLEEP) diff = MAX_SLEEP;
             if(diff > 0) {
                 usleep(diff);
             }
