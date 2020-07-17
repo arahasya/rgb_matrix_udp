@@ -33,6 +33,7 @@ public:
         Z32ABC,             // Z-striped: 3-bit address, 32-pixel strips
         Z16AB,              // Z-striped: 2-bit address, 16-pixel strips
         Z08AB,              // Z-striped: 2-bit address, 8-pixel strips
+        Z48ABC,             // Z-striped: 3-bit address, 48-pixel strips
     };
 
     enum Transforming {
