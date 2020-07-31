@@ -115,7 +115,6 @@ int main(int argc, char **argv) {
     MatrixDriver::initGpio(MatrixDriver::gpio_rpi3);
 
     matrix = MatrixDriver::createInstance(PWM_BITS, MatrixDriver::HUB75ABC, MatrixDriver::Z32ABC, MatrixDriver::MIRRORV);
-    createPwmLutLinear(PWM_BITS, brightness, matrix->getPwmMapping());
     createPwmLutCie1931(PWM_BITS, brightness, matrix->getPwmMapping());
     log("instantiated matrix driver");
     log("matrix canvas is %d x %d", matrix->getWidth(), matrix->getHeight());
