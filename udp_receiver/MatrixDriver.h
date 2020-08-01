@@ -40,7 +40,9 @@ public:
         NO_TRANSFORMING,    // normal pixel mapping
         MIRRORH,            // mirror transfor,er, horizontal
         MIRRORV,            // mirror transfor,er, horizontal
-        ROTATE,             // rotation transformer
+        ROTATE90,
+	ROTATE180,
+	ROTATE270,             // rotation transformer
     };
 
     static MatrixDriver * createInstance(unsigned pwmBits, RowFormat rowFormat, Interleaving interleaving = NO_INTERLEAVING, Transforming transforming = NO_TRANSFORMING);

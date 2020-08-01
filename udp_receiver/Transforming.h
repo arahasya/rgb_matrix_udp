@@ -15,7 +15,10 @@ namespace Transformers {
     void NoTransforming(unsigned &x, unsigned &y, unsigned &matrixWidth, unsigned &matrixHeight);
     void MIRRORH(unsigned &x, unsigned &y, unsigned &matrixWidth, unsigned &matrixHeight);
     void MIRRORV(unsigned &x, unsigned &y, unsigned &matrixWidth, unsigned &matrixHeight);
-    void ROTATE(unsigned &x, unsigned &y, unsigned &matrixWidth, unsigned &matrixHeight);
+    void ROTATE90(unsigned &x, unsigned &y, unsigned &matrixWidth, unsigned &matrixHeight);
+    void ROTATE90(unsigned &x, unsigned &y, unsigned &matrixWidth, unsigned &matrixHeight);
+    void ROTATE180(unsigned &x, unsigned &y, unsigned &matrixWidth, unsigned &matrixHeight);
+    void ROTATE270(unsigned &x, unsigned &y, unsigned &matrixWidth, unsigned &matrixHeight);
 }
 
 #endif //UDP_RECEIVER_TRANSFORMING_H
