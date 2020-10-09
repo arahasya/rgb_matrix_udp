@@ -9,7 +9,7 @@ Transformers::Transformer Transformers::transformer[4] = {
         Transformers::NoTransforming,
 	Transformers::MIRRORH,
 	Transformers::MIRRORV,
-	Transformers::ROTATE
+  Transformers::ROTATE
 };
 
 // no transforming does nothing

@@ -16,6 +16,7 @@ public:
     virtual ~PixelMapping() = default;
 
     virtual void remap(unsigned &x, unsigned &y);
+    virtual void getCanvasSize(unsigned rasterWidth, unsigned rasterHeight, unsigned &canvasWidth, unsigned &canvasHeight);
 };
 
 class MatrixDriver : public PixelMapping {
@@ -38,12 +39,13 @@ public:
 
     enum Transforming {
         NO_TRANSFORMING,    // normal pixel mapping
-        MIRRORH,            // mirror transfor,er, horizontal
-        MIRRORV,            // mirror transfor,er, horizontal
+        MIRRORH,            // mirror transformer, horizontal
+        MIRRORV,            // mirror transformer, vertical
         ROTATE,             // rotation transformer
     };
 
-    static MatrixDriver * createInstance(unsigned pwmBits, RowFormat rowFormat, Interleaving interleaving = NO_INTERLEAVING, Transforming transforming = NO_TRANSFORMING);
+    static MatrixDriver * createInstance(unsigned pwmBits, RowFormat rowFormat, Interleaving interleaving = NO_INTERLEAVING,
+                                         Transforming transforming = NO_TRANSFORMING);
     ~MatrixDriver() override;
 
     void flipBuffer();
@@ -106,10 +108,6 @@ private:
     void start();
     void stop();
     static void* doRefresh(void *obj);
-
-    // estimate new canvas dimensions after remapping
-    unsigned measureMappedWidth() const;
-    unsigned measureMappedHeight() const;
 
 public:
     unsigned getWidth() const { return rasterWidth; }
