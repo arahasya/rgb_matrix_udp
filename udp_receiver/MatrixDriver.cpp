@@ -81,6 +81,10 @@ static void die(const char *format, ...) __attribute__ ((__format__ (__printf__,
 
 // default pixel mapping does nothing
 void PixelMapping::remap(unsigned int &x, unsigned int &y) {}
+void PixelMapping::getCanvasSize(unsigned rasterWidth, unsigned rasterHeight, unsigned &canvasWidth, unsigned &canvasHeight) {
+  canvasWidth = rasterWidth;
+  canvasHeight = rasterHeight;
+}
 
 MatrixDriver * MatrixDriver::createInstance(unsigned pwmBits, const RowFormat rowFormat, const Interleaving interleaving, const Transforming transforming) {
     selfTestRGB();
@@ -217,7 +221,7 @@ MatrixDriver::MatrixDriver(
         size_t _rowBlock,
         size_t _pwmBlock,
         Interleaving interleaving,
-	Transforming transforming
+        Transforming transforming
 ) :
     matrixWidth(_rowBlock - ROW_PADDING), matrixHeight(_scanRowCnt * 8), scanRowCnt(_scanRowCnt), pwmRows(_pwmRows),
     mapPwmBit(_mapPwmBit), rowBlock(_rowBlock), pwmBlock(_pwmBlock),
@@ -298,36 +302,9 @@ void MatrixDriver::clearFrame() const {
     }
 }
 
-unsigned MatrixDriver::measureMappedWidth() const {
-    unsigned w = 0;
-    while(w < -1u) {
-        auto x = w;
-        unsigned y = 0;
-        pixelMapping->remap(x, y);
-        if(x >= rasterWidth) break;
-        if(y >= rasterHeight) break;
-        ++w;
-    }
-    return w;
-}
-
-unsigned MatrixDriver::measureMappedHeight() const {
-    unsigned h = 0;
-    while(h < -1u) {
-        auto y = h;
-        unsigned x = 0;
-        pixelMapping->remap(x, y);
-        if(x >= rasterWidth) break;
-        if(y >= rasterHeight) break;
-        ++h;
-    }
-    return h;
-}
-
 void MatrixDriver::setPixelMapping(PixelMapping *pixelMap) {
     pixelMapping = pixelMap;
-    canvasWidth = measureMappedWidth();
-    canvasHeight = measureMappedHeight();
+    pixelMapping->getCanvasSize(rasterWidth, rasterHeight, canvasWidth, canvasHeight);
 }
 
 void MatrixDriver::setPixel(unsigned x, unsigned y, uint8_t r, uint8_t g, uint8_t b) const {
